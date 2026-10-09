@@ -1,62 +1,107 @@
-# homelab
-Welcome to my homelab! This repository is meant as a platform for me to document my homelab and share my progress with my fellow githubbers. I started getting into homelabbing during my 2nd year of my bachelors where I got myself a raspberry pi 5. However as you can see I have come quite a bit since then with a 10 inch rack. I built this lab mainly as a platform to experiment and learn IT concepts like IaC (terraform/tofu, Ansible, Kubernetes etc...) and hosting my various projects. So far I have learnt alot when it comes to hardware and virtualization, but I will get more into that further down the documentation.
+# 🏠 Homelab
 
-# Pictures
+Welcome to my homelab! This repository documents my setup and tracks my progress as it grows.
 
+My homelab journey started during the second year of my bachelor's degree with a single Raspberry Pi 5. Since then, it has grown into a 10-inch rack running a three-node Proxmox cluster. The lab serves two main purposes:
 
-# Hardware specifications
-Mini-PC(PVE1) - Dell Optiplex 3060 Micro
-Specification:
-  - Processor: Intel I5-8500T 6C/6T
-  - Memory: 16GB DDR4 RAM
-  - Storage: 512GB NVME, 512GB SATA SSD
+- **Learning** – a hands-on platform for experimenting with IT concepts such as Infrastructure as Code (Terraform/OpenTofu, Ansible, Kubernetes and more)
+- **Hosting** – a home for my personal projects and self-hosted services
 
-Mini-PC(PVE2) - Dell Optiplex 3060 Micro
-Specification:
-  - Processor: Intel I5-8500T 6C/6T
-  - Memory: 16GB DDR4 RAM
-  - Storage: 256GB NVME, 256GB SATA SSD
+So far I've learned a lot about hardware and virtualization, which I go into in more detail below.
 
-Mini-PC(PVE2) - Dell Optiplex 3060 Micro
-Specification:
-  - Processor: Intel I5-8500T 6C/6T
-  - Memory: 16GB DDR4 RAM
-  - Storage: 256GB NVME, 1TB HDD
+---
 
-RaspberryPi 7" display paired with a RPI3B
+## 📸 Pictures
 
-Netgear GS105 switch
+<!-- Add photos of the rack here, e.g.:
+![Front of the rack](images/rack-front.jpg)
+-->
 
-# Services
-I am running all 3 machines in a 3 node proxmox cluster. From there I host my services using LxCs or VMs.
+*Coming soon.*
 
-PVE1:
-  - AdGuard
-  - VaultWarden (Password manager)
-  - HermesAgent (AI agent)
-  - Finn.no-Bot (Website scrubber)
-  - Discord-bot
-  - Minecraft-server
+---
 
-PVE2: 
-  - immich (Photo library)
-  - Nginx Proxy Manager (Reverse proxy)
-  - Tailscale (VPN)
-  - Protfolio-Website (dead)
+## 🖥️ Hardware
 
-PVE3: 
-  - influxDB
-  - Grafana (Monitoring)
+### Compute nodes
 
-# Architecture
- - All machines are running a hypervisor OS called proxmox, where all of them are connected together creating a cluster
- - Tailscale is a mesh VPN provider which I use for remote access to the homelab
- - InfluxDB is used to collect cluster data from proxmox (Storage capacity, CPU usage, memory usage, etc)
- - Grafana is used to display selected data from InfluxDB, for easy monitoring on the screen
- - Most of the services are running on LxC for resource efficiency. Most of them uses Ubuntu with some using Debian.
+All three nodes are **Dell OptiPlex 3060 Micro** mini PCs.
 
+| Node | CPU | Memory | Storage |
+|------|-----|--------|---------|
+| **PVE1** | Intel Core i5-8500T (6C/6T) | 16 GB DDR4 | 512 GB NVMe + 512 GB SATA SSD |
+| **PVE2** | Intel Core i5-8500T (6C/6T) | 16 GB DDR4 | 256 GB NVMe + 256 GB SATA SSD |
+| **PVE3** | Intel Core i5-8500T (6C/6T) | 16 GB DDR4 | 256 GB NVMe + 1 TB HDD |
 
+**Cluster total:** 18 cores · 48 GB RAM · ~2.8 TB raw storage
 
+### Other hardware
 
+| Device | Purpose |
+|--------|---------|
+| Raspberry Pi 3B + official 7" display | Monitoring dashboard (Grafana) |
+| Netgear GS105 | 5-port gigabit network switch |
 
+---
 
+## ⚙️ Services
+
+All three machines run together as a **Proxmox VE cluster**, with services deployed as LXC containers or virtual machines.
+
+### PVE1
+
+| Service | Description |
+|---------|-------------|
+| AdGuard Home | Network-wide DNS and ad blocking |
+| Vaultwarden | Self-hosted password manager |
+| Hermes Agent | AI agent |
+| Finn.no Bot | Web scraper for Finn.no listings |
+| Discord Bot | Custom Discord bot |
+| Minecraft Server | Game server |
+
+### PVE2
+
+| Service | Description |
+|---------|-------------|
+| Immich | Self-hosted photo and video library |
+| Nginx Proxy Manager | Reverse proxy |
+| Tailscale | Mesh VPN for remote access |
+| ~~Portfolio Website~~ | *Retired* |
+
+### PVE3
+
+| Service | Description |
+|---------|-------------|
+| InfluxDB | Time-series database for cluster metrics |
+| Grafana | Monitoring dashboards |
+
+---
+
+## 🧱 Architecture
+
+- **Virtualization** – Every node runs **Proxmox VE**, a hypervisor OS. The three nodes are joined into a single cluster, so they can be managed from one interface.
+- **Containers first** – Most services run in **LXC containers** for resource efficiency. The majority are based on Ubuntu, with a few on Debian.
+- **Remote access** – **Tailscale** provides secure access to the lab from anywhere without exposing ports to the internet.
+- **Monitoring** – Proxmox sends cluster metrics (CPU, memory, storage and more) to **InfluxDB**. **Grafana** visualizes the selected metrics on the Raspberry Pi display for at-a-glance monitoring.
+
+```
+            ┌──────────────── Proxmox VE Cluster ────────────────┐
+            │                                                    │
+            │   PVE1            PVE2             PVE3            │
+            │   AdGuard         Immich           InfluxDB ◄──┐   │
+            │   Vaultwarden     Nginx PM         Grafana     │   │
+            │   Bots & apps     Tailscale           │        │   │
+            │                                       │   metrics  │
+            └───────────────────────────────────────┼────────┴───┘
+                                                    ▼
+                                         Raspberry Pi 3B + 7" display
+```
+
+---
+
+## 🗺️ Roadmap
+
+- [ ] Add photos of the rack
+- [ ] Manage infrastructure with Terraform/OpenTofu
+- [ ] Automate configuration with Ansible
+- [ ] Experiment with Kubernetes
