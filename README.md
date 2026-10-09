@@ -13,11 +13,9 @@ So far I've learned a lot about hardware and virtualization, which I go into in 
 
 ## 📸 Pictures
 
-<!-- Add photos of the rack here, e.g.:
-![Front of the rack](images/rack-front.jpg)
--->
+![Front of the rack](images/Front_rack.jpg)
+![Side of the rack](images/Side_rack.jpg)
 
-*Coming soon.*
 
 ---
 
