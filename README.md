@@ -98,8 +98,6 @@ All three machines run together as a **Proxmox VE cluster**, with services deplo
 ---
 
 ## 🗺️ Roadmap
-
-- [ ] Add photos of the rack
 - [ ] Manage infrastructure with Terraform/OpenTofu
 - [ ] Automate configuration with Ansible
 - [ ] Experiment with Kubernetes
