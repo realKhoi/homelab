@@ -53,7 +53,7 @@ All three machines run together as a **Proxmox VE cluster**, with services deplo
 | AdGuard Home | Network-wide DNS and ad blocking |
 | Vaultwarden | Self-hosted password manager |
 | Hermes Agent | AI agent |
-| Finn.no Bot | Web scraper for Finn.no listings |
+| [Finn.no](https://github.com/realKhoi/Finn-bot) Bot | Web scraper for Finn.no listings |
 | Discord Bot | Custom Discord bot |
 | Minecraft Server | Game server |
 
@@ -64,7 +64,7 @@ All three machines run together as a **Proxmox VE cluster**, with services deplo
 | Immich | Self-hosted photo and video library |
 | Nginx Proxy Manager | Reverse proxy |
 | Tailscale | Mesh VPN for remote access |
-| ~~Portfolio Website~~ | *Retired* |
+| Personal website | Not active |
 
 ### PVE3
 
